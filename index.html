@@ -63,6 +63,9 @@ h1{margin:0;font-size:clamp(32px,9vw,56px);line-height:1.05;font-weight:800;lett
 .price{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
 .shop{color:var(--ink);font-weight:600;font-size:14px;text-underline-offset:3px}
 .note{margin:0;font-size:13px;color:var(--muted)}
+.pick{font-size:14px;font-weight:600;font-style:italic;color:var(--deep)}
+.tag .pick{color:#7F1420}
+.item.taken:not(:has(.thumb)){padding-top:64px}
 .claim{border:0;min-height:48px;border-radius:999px;background:var(--deep);color:var(--card);font-size:15px;font-weight:700;margin-top:auto}
 .confirm{display:flex;flex-direction:column;gap:8px;background:var(--card);border-radius:12px;padding:10px}
 .confirm label{font-size:13px;font-weight:600}
@@ -223,14 +226,14 @@ function renderPeople(){
 }
 function itemHTML(it,p){
   var owner=state.key?'<div class="owner"><button type="button" data-act="edit" data-id="'+esc(it.id)+'">Edit</button><button type="button" data-act="remove" data-id="'+esc(it.id)+'">Remove</button></div>':'';
-  var img=safeUrl(it.image)?'<img src="'+esc(it.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer">':GIFT;
-  var shop=safeUrl(it.url)?'<a class="shop" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+(it.store?'View at '+esc(it.store):'View it')+' ↗</a>':'';
+  var img=safeUrl(it.image)?'<div class="thumb"><img src="'+esc(it.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>':'';
+  var shop=safeUrl(it.url)?'<a class="shop" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+(it.store?'View at '+esc(it.store):'View it')+' ↗</a>':'<span class="pick">You pick which one!</span>';
   var price=it.price?'<span class="price">'+esc(it.price)+'</span>':'';
   if(p.squad)return squadHTML(it,img,shop,price,owner);
   if(it.claimed){
-    return '<article class="item taken'+(state.justTaken===it.id?' anim':'')+'">'+BOW+'<div class="thumb">'+img+'</div><div class="tag"><strong>'+(it.claimedBy?esc(it.claimedBy)+' is getting this!':'Someone is getting this!')+'</strong><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div><button type="button" class="undo" data-act="unclaim" data-id="'+esc(it.id)+'">Not getting it after all?</button></div>'+owner+'</article>';
+    return '<article class="item taken'+(state.justTaken===it.id?' anim':'')+'">'+BOW+img+'<div class="tag"><strong>'+(it.claimedBy?esc(it.claimedBy)+' is getting this!':'Someone is getting this!')+'</strong><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div><button type="button" class="undo" data-act="unclaim" data-id="'+esc(it.id)+'">Not getting it after all?</button></div>'+owner+'</article>';
   }
-  var body='<article class="item"><div class="thumb">'+img+'</div><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
+  var body='<article class="item">'+img+'<h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
   if(state.confirming===it.id){
     body+='<form class="confirm" data-claim="'+esc(it.id)+'"><label for="by-'+esc(it.id)+'">Your name (so Kathleen knows, optional)</label><input id="by-'+esc(it.id)+'" type="text" maxlength="40" value="'+esc(store('wl-name')||'')+'" autocomplete="given-name"><div class="row"><button class="yes" type="submit">Yes, I\'m getting it</button><button class="no" type="button" data-act="cancel">Cancel</button></div></form>';
   }else body+='<button type="button" class="claim" data-act="claim" data-id="'+esc(it.id)+'">I\'m getting this one!</button>';
@@ -240,7 +243,7 @@ var HAT='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><pat
 function elfNames(it){return String(it.claimedBy||'').split(/\s*,\s*/).filter(Boolean)}
 function squadHTML(it,img,shop,price,owner){
   var names=elfNames(it),me=(store('wl-name')||'').toLowerCase(),imIn=!!me&&names.some(function(n){return n.toLowerCase()===me});
-  var h='<article class="item"><div class="thumb">'+img+'</div><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
+  var h='<article class="item">'+img+'<h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
   h+='<div class="elves"><strong class="hat">'+HAT+(names.length?names.length+(names.length===1?' elf':' elves')+' chipping in':'No elves yet. Be the first!')+'</strong>'+(names.length?'<span>'+esc(names.join(', '))+'</span>':'')+'</div>';
   if(state.confirming===it.id){
     h+='<form class="confirm" data-claim="'+esc(it.id)+'" data-squad="1"><label for="by-'+esc(it.id)+'">Your name</label><input id="by-'+esc(it.id)+'" type="text" maxlength="40" required value="'+esc(store('wl-name')||'')+'" autocomplete="given-name"><div class="row"><button class="yes" type="submit">Count me in!</button><button class="no" type="button" data-act="cancel">Cancel</button></div></form>';
