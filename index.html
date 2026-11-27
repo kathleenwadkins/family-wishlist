@@ -185,9 +185,9 @@ var PEOPLE=[
   {id:'james',name:'James',tone:'green'},
   {id:'emma',name:'Emma',tone:'red'},
   {id:'bennett',name:'Bennett',tone:'gold'},
+  {id:'kids',name:'The Little Elves',tone:'red',blurb:'Gifts for James, Emma and Bennett to share.'},
   {id:'todd',name:'Todd',tone:'green'},
-  {id:'kathleen',name:'Kathleen',tone:'red'},
-  {id:'squad',name:'Elf Squad',tone:'gold',squad:true}
+  {id:'kathleen',name:'Kathleen',tone:'red'}
 ];
 var state={items:[],show:'all',confirming:'',justTaken:'',editing:'',key:''};
 var $=function(id){return document.getElementById(id)};
@@ -256,7 +256,7 @@ function render(){
     var list=state.items.filter(function(i){return i.person===p.id}).sort(function(a,b){return (a.claimed?1:0)-(b.claimed?1:0)||(b.addedAt||0)-(a.addedAt||0)});
     var open=list.filter(function(i){return !i.claimed}).length;
     if(p.squad)return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head"><h2 class="hat">'+HAT+p.name+'</h2></div><p class="squad-intro">Bigger gifts we can all go in on together. Tap Join the Elf Squad and Kathleen will sort out who owes what.</p>'+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">No Elf Squad gifts yet.</p>')+'</section>';
-    return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head"><h2>'+p.name+'</h2><p>'+(list.length?open+' still up for grabs · '+(list.length-open)+' taken':'')+'</p></div>'+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">Nothing on '+p.name+'\'s list yet.</p>')+'</section>';
+    return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head">'+(p.blurb?'<h2 class="hat">'+HAT+p.name+'</h2>':'<h2>'+p.name+'</h2>')+'<p>'+(list.length?open+' still up for grabs · '+(list.length-open)+' taken':'')+'</p></div>'+(p.blurb?'<p class="squad-intro">'+p.blurb+'</p>':'')+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">Nothing on '+p.name+'\'s list yet.</p>')+'</section>';
   }).join('');
 }
 
