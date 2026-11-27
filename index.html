@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Our Family Wish List</title>
+<meta name="description" content="Christmas wish lists for Kathleen, Todd, James, Emma and Bennett. Tap I'm getting this one so nobody doubles up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --bg:#FBF6EE; --ink:#1E1E1E; --muted:#4F4F4F; --line:#E8DFD0; --card:#FFFFFF;
+  --pine:#1F4D3A; --pine-deep:#163D2E; --berry:#9E1B28; --gold:#E8B04B; --gold-soft:#F3D58A;
+  --red-tint:#F9DEDF; --red-deep:#B01E2C; --green-tint:#DCEBDF; --green-deep:#1F5C3B; --gold-tint:#F8EAC4; --gold-deep:#7F5600;
+  --font:'Poppins',-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#13201A; --ink:#F3EFE7; --muted:#C2C9C4; --line:#2E3D35; --card:#1D2B24;
+  --red-tint:#3A1F22; --green-tint:#1E3328; --gold-tint:#3A3020; --red-deep:#E0525E; --green-deep:#5BBF86; --gold-deep:#E8B04B; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1200px;margin:0 auto;padding-block:20px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:24px}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer;transition:background-color 160ms ease,color 160ms ease,transform 120ms ease}
+button:active{transform:scale(.97)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+img{max-width:100%}
+.hero{border-radius:24px;overflow:hidden;color:#fff;background-color:var(--pine-deep);
+  background-image:radial-gradient(circle at 20% 30%,rgba(255,255,255,.9) 0 1.5px,transparent 2.5px),radial-gradient(circle at 70% 60%,rgba(255,255,255,.7) 0 1px,transparent 2px),radial-gradient(circle at 45% 80%,rgba(255,255,255,.8) 0 2px,transparent 3px),radial-gradient(circle at 85% 15%,rgba(255,255,255,.6) 0 1px,transparent 2px);
+  background-size:90px 90px,60px 60px,140px 140px,45px 45px}
+.lights{position:relative;height:44px;overflow:hidden}
+.lights::before{content:"";position:absolute;left:0;right:0;top:10px;height:2px;background:#0B241A}
+.lights-row{position:relative;display:flex;justify-content:space-around;padding:0 12px}
+.bw{display:flex;flex-direction:column;align-items:center}
+.bw:nth-child(even){margin-top:8px}.bw:nth-child(odd){margin-top:2px}
+.cap{width:8px;height:6px;background:#0B241A;border-radius:2px}
+.bulb{width:14px;height:20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:tw 2.4s ease-in-out infinite}
+.bw:nth-child(3n) .bulb{animation-delay:.8s}.bw:nth-child(3n+1) .bulb{animation-delay:1.6s}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.55}}
+@media (max-width:520px){.bw:nth-child(n+13){display:none}}
+.hero-body{padding:12px clamp(20px,5vw,36px) clamp(24px,5vw,36px);display:flex;flex-direction:column;gap:6px}
+.eyebrow{margin:0;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft)}
+h1{margin:0;font-size:clamp(32px,9vw,56px);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+.sub{margin:0;color:#E4EFE8;max-width:60ch}
+.people{display:flex;gap:8px;flex-wrap:wrap}
+.people button{border:1px solid var(--line);min-height:44px;padding:0 18px;border-radius:999px;background:var(--card);color:var(--ink);font-size:14px;font-weight:600}
+.people button[aria-pressed="true"]{background:var(--berry);border-color:var(--berry);color:#fff}
+.status{margin:0;color:var(--muted)}
+.notice{background:var(--card);border:2px dashed var(--line);border-radius:16px;padding:16px 18px}
+.person{display:flex;flex-direction:column;gap:14px}
+.person-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.person-head h2{margin:0;font-size:clamp(24px,6vw,30px);font-weight:800;letter-spacing:-.02em;color:var(--deep)}
+.person-head p{margin:0;color:var(--muted);font-size:14px}
+.person.red{--tint:var(--red-tint);--deep:var(--red-deep)}.person.green{--tint:var(--green-tint);--deep:var(--green-deep)}.person.gold{--tint:var(--gold-tint);--deep:var(--gold-deep)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:16px}
+.item{position:relative;background:var(--tint);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:hidden}
+.thumb{aspect-ratio:4/3;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:contain}
+.thumb svg{color:var(--deep);opacity:.6}
+.item h3{margin:0;font-size:16px;line-height:1.35;font-weight:600;overflow-wrap:anywhere}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.price{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
+.shop{color:var(--ink);font-weight:600;font-size:14px;text-underline-offset:3px}
+.note{margin:0;font-size:13px;color:var(--muted)}
+.claim{border:0;min-height:48px;border-radius:999px;background:var(--deep);color:var(--card);font-size:15px;font-weight:700;margin-top:auto}
+.confirm{display:flex;flex-direction:column;gap:8px;background:var(--card);border-radius:12px;padding:10px}
+.confirm label{font-size:13px;font-weight:600}
+.confirm input{min-height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:15px;background:var(--bg);color:var(--ink)}
+.confirm .row{display:flex;gap:8px;flex-wrap:wrap}
+.confirm .yes{flex:1 1 auto;border:0;min-height:44px;border-radius:999px;background:var(--deep);color:var(--card);font-weight:700}
+.confirm .no{border:1px solid var(--line);min-height:44px;padding:0 14px;border-radius:999px;background:transparent;color:var(--ink)}
+/* claimed = wrapped present */
+.item.taken{background-color:var(--deep);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.16) 0 9px,transparent 9px 18px),radial-gradient(circle,rgba(255,255,255,.45) 1.4px,transparent 2px);background-size:auto,14px 14px}
+.item.taken::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:14px;margin-left:-7px;background:#E8B04B;box-shadow:inset 2px 0 0 rgba(255,255,255,.35)}
+.item.taken::after{content:"";position:absolute;left:0;right:0;top:38%;height:14px;background:#E8B04B;box-shadow:inset 0 2px 0 rgba(255,255,255,.35)}
+.item.taken>*{position:relative;z-index:1}
+.item.taken .thumb{opacity:.35;filter:grayscale(.4)}
+.tag{background:#FFFDF8;color:#1E1E1E;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tag h3{color:#1E1E1E}
+.tag .shop{color:#1E1E1E}
+.tag strong{font-size:14px;color:#7F1420}
+.undo{background:none;border:0;padding:0;color:#4F4F4F;font-size:13px;text-decoration:underline;align-self:flex-start;min-height:32px}
+.bow{position:absolute;left:50%;top:-4px;margin-left:-28px;z-index:2;width:56px;height:38px;pointer-events:none}
+.item.anim{animation:wrapin .6s ease-out}.item.anim .bow{animation:pop .5s .3s both}
+@keyframes wrapin{0%{transform:scale(1)}35%{transform:scale(.94) rotate(-2deg)}70%{transform:scale(1.03) rotate(1deg)}100%{transform:none}}
+@keyframes pop{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.bulb,.item.anim,.item.anim .bow{animation:none}}
+.owner{display:flex;gap:6px;flex-wrap:wrap}
+.owner button{border:1px solid var(--line);min-height:36px;padding:0 12px;border-radius:999px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600}
+.item.taken .owner button{background:#FFFDF8;color:#1E1E1E;border-color:#FFFDF8}
+.empty{margin:0;font-style:italic;color:var(--muted)}
+/* tools */
+.tools{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.candy{height:10px;background-image:repeating-linear-gradient(-45deg,#C8202F 0 14px,#fff 14px 28px)}
+.tools-body{padding:clamp(16px,4vw,24px);display:flex;flex-direction:column;gap:12px}
+.tools h2{margin:0;font-size:20px;color:var(--pine)}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:13px;font-weight:600}
+.field input,.field select,.field textarea{min-height:44px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px;background:var(--bg);color:var(--ink);width:100%}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px}
+.btn{border:0;min-height:46px;padding:0 22px;border-radius:999px;background:var(--pine);color:#fff;font-size:15px;font-weight:700}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.preview-img{width:96px;height:96px;object-fit:contain;border-radius:10px;background:var(--bg)}
+.msg{margin:0;font-size:14px;font-weight:600}
+.foot{margin:0;text-align:center;color:var(--muted);font-size:13px}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;min-height:44px}
+.merry{margin:0;text-align:center;font-size:22px;font-weight:700;color:var(--red-deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="lights" aria-hidden="true"><div class="lights-row" id="lights"></div></div>
+    <div class="hero-body">
+      <p class="eyebrow">★ Christmas 2026</p>
+      <h1>Our Family Wish List</h1>
+      <p class="sub">Pick something for Kathleen, Todd, James, Emma or Bennett, then tap "I'm getting this one!" so nobody else buys it too.</p>
+    </div>
+  </header>
+
+  <div class="people" role="group" aria-label="Show list for" id="people"></div>
+  <p class="status" id="status" role="status">Loading the wish list…</p>
+
+  <main id="lists" style="display:flex;flex-direction:column;gap:32px"></main>
+
+  <section class="tools" id="tools" hidden aria-label="Add a gift">
+    <div class="candy" aria-hidden="true"></div>
+    <div class="tools-body">
+      <h2 id="tools-title">Add a gift</h2>
+      <form id="read-form" class="btnrow" style="align-items:flex-end">
+        <div class="field" style="flex:1 1 280px">
+          <label for="link">Paste a product link</label>
+          <input id="link" type="url" inputmode="url" placeholder="https://www.target.com/p/…" autocomplete="off">
+        </div>
+        <button class="btn" type="submit" id="read-btn">Read link</button>
+      </form>
+      <form id="item-form" style="display:flex;flex-direction:column;gap:12px">
+        <div class="fields">
+          <div class="field"><label for="f-person">For</label><select id="f-person" required></select></div>
+          <div class="field"><label for="f-name">Gift name</label><input id="f-name" type="text" required maxlength="200"></div>
+          <div class="field"><label for="f-price">Price</label><input id="f-price" type="text" placeholder="$24.99" maxlength="30"></div>
+          <div class="field"><label for="f-store">Store</label><input id="f-store" type="text" placeholder="Target" maxlength="60"></div>
+          <div class="field"><label for="f-url">Link to buy</label><input id="f-url" type="url" placeholder="https://"></div>
+          <div class="field"><label for="f-image">Picture link (optional)</label><input id="f-image" type="url" placeholder="https://"></div>
+        </div>
+        <div class="field"><label for="f-note">Note (size, color, etc.)</label><input id="f-note" type="text" maxlength="300"></div>
+        <div class="btnrow">
+          <img id="f-preview" class="preview-img" alt="" hidden>
+          <button class="btn" type="submit" id="save-btn">Add to the list</button>
+          <button class="btn alt" type="button" id="cancel-edit" hidden>Cancel edit</button>
+        </div>
+        <p class="msg" id="tool-msg" role="status"></p>
+      </form>
+      <button type="button" class="linkbtn" id="lock" style="align-self:flex-start">Lock adding on this device</button>
+    </div>
+  </section>
+
+  <section class="tools" id="unlock" hidden aria-label="Kathleen's tools">
+    <div class="tools-body">
+      <h2>Kathleen's tools</h2>
+      <form id="unlock-form" class="btnrow" style="align-items:flex-end">
+        <div class="field" style="flex:1 1 220px"><label for="passcode">Passcode</label><input id="passcode" type="password" autocomplete="current-password"></div>
+        <button class="btn" type="submit">Unlock</button>
+      </form>
+      <p class="msg" id="unlock-msg" role="status"></p>
+    </div>
+  </section>
+
+  <p class="merry">Merry Christmas!</p>
+  <p class="foot">Got something already? Tap "Not getting it after all?" to free it back up.<br><button type="button" class="linkbtn" id="show-unlock">Kathleen's tools</button></p>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function(){
+var API=(window.WISHLIST_API||'').trim();
+var PEOPLE=[
+  {id:'kathleen',name:'Kathleen',tone:'green'},
+  {id:'todd',name:'Todd',tone:'red'},
+  {id:'james',name:'James',tone:'gold'},
+  {id:'emma',name:'Emma',tone:'red'},
+  {id:'bennett',name:'Bennett',tone:'green'}
+];
+var state={items:[],show:'all',confirming:'',justTaken:'',editing:'',key:''};
+var $=function(id){return document.getElementById(id)};
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:''}
+
+var colors=['#FF4B4B','#FFC93C','#3DDC84','#4DA3FF','#FF8AD8'],lh='';
+for(var n=0;n<22;n++){var c=colors[n%5];lh+='<div class="bw"><div class="cap"></div><div class="bulb" style="background:'+c+';box-shadow:0 0 12px '+c+'"></div></div>'}
+$('lights').innerHTML=lh;
+$('f-person').innerHTML=PEOPLE.map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>'}).join('');
+
+var BOW='<svg class="bow" viewBox="0 0 36 24" aria-hidden="true"><path d="M18 12C12 2 3 3 3 9s9 5 15 3z" fill="#F3C45A" stroke="#A87412" stroke-width="1.5"/><path d="M18 12c6-10 15-9 15-3s-9 5-15 3z" fill="#F3C45A" stroke="#A87412" stroke-width="1.5"/><path d="M17 13l-5 10M19 13l5 10" stroke="#A87412" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="12" r="3.5" fill="#E8B04B" stroke="#A87412" stroke-width="1.5"/></svg>';
+var GIFT='<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>';
+
+/* ---------- api ---------- */
+function get(){return fetch(API+'?action=list',{cache:'no-store'}).then(function(r){return r.json()})}
+function post(body){
+  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(function(r){return r.json()});
+}
+function load(){
+  if(!API){$('status').innerHTML='<span class="notice" style="display:block">This page isn\'t connected to its Google Sheet yet. Add the web app link to config.js.</span>';return}
+  get().then(function(res){
+    if(!res.ok)throw new Error(res.error);
+    state.items=res.items||[];$('status').hidden=true;render();
+  }).catch(function(){$('status').hidden=false;$('status').textContent="Couldn't load the wish list. Check your connection and reload."});
+}
+
+/* ---------- render ---------- */
+function renderPeople(){
+  var opts=[{id:'all',name:'Everyone'}].concat(PEOPLE);
+  $('people').innerHTML=opts.map(function(p){return '<button type="button" data-show="'+p.id+'" aria-pressed="'+(state.show===p.id)+'">'+p.name+'</button>'}).join('');
+}
+function itemHTML(it,p){
+  var owner=state.key?'<div class="owner"><button type="button" data-act="edit" data-id="'+esc(it.id)+'">Edit</button><button type="button" data-act="remove" data-id="'+esc(it.id)+'">Remove</button></div>':'';
+  var img=safeUrl(it.image)?'<img src="'+esc(it.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer">':GIFT;
+  var shop=safeUrl(it.url)?'<a class="shop" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+(it.store?'View at '+esc(it.store):'View it')+' ↗</a>':'';
+  var price=it.price?'<span class="price">'+esc(it.price)+'</span>':'';
+  if(it.claimed){
+    return '<article class="item taken'+(state.justTaken===it.id?' anim':'')+'">'+BOW+'<div class="thumb">'+img+'</div><div class="tag"><strong>'+(it.claimedBy?esc(it.claimedBy)+' is getting this!':'Someone is getting this!')+'</strong><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div><button type="button" class="undo" data-act="unclaim" data-id="'+esc(it.id)+'">Not getting it after all?</button></div>'+owner+'</article>';
+  }
+  var body='<article class="item"><div class="thumb">'+img+'</div><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
+  if(state.confirming===it.id){
+    body+='<form class="confirm" data-claim="'+esc(it.id)+'"><label for="by-'+esc(it.id)+'">Your name (so Kathleen knows, optional)</label><input id="by-'+esc(it.id)+'" type="text" maxlength="40" value="'+esc(store('wl-name')||'')+'" autocomplete="given-name"><div class="row"><button class="yes" type="submit">Yes, I\'m getting it</button><button class="no" type="button" data-act="cancel">Cancel</button></div></form>';
+  }else body+='<button type="button" class="claim" data-act="claim" data-id="'+esc(it.id)+'">I\'m getting this one!</button>';
+  return body+owner+'</article>';
+}
+function render(){
+  renderPeople();
+  var shown=state.show==='all'?PEOPLE:PEOPLE.filter(function(p){return p.id===state.show});
+  $('lists').innerHTML=shown.map(function(p){
+    var list=state.items.filter(function(i){return i.person===p.id}).sort(function(a,b){return (a.claimed?1:0)-(b.claimed?1:0)||(b.addedAt||0)-(a.addedAt||0)});
+    var open=list.filter(function(i){return !i.claimed}).length;
+    return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head"><h2>'+p.name+'</h2><p>'+(list.length?open+' still up for grabs · '+(list.length-open)+' taken':'')+'</p></div>'+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">Nothing on '+p.name+'\'s list yet.</p>')+'</section>';
+  }).join('');
+}
+
+/* ---------- events ---------- */
+$('people').addEventListener('click',function(e){var b=e.target.closest('[data-show]');if(!b)return;state.show=b.dataset.show;render()});
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]');if(!b)return;var id=b.dataset.id,act=b.dataset.act;
+  if(act==='claim'){state.confirming=id;render();var inp=$('by-'+id);if(inp)inp.focus()}
+  else if(act==='cancel'){state.confirming='';render()}
+  else if(act==='unclaim'){
+    if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Tap again to free it up';return}
+    post({action:'unclaim',id:id}).then(apply).catch(netErr);
+  }
+  else if(act==='edit')startEdit(id);
+  else if(act==='remove'){
+    if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Tap again to remove';return}
+    post({action:'remove',id:id,key:state.key}).then(apply).catch(netErr);
+  }
+});
+document.addEventListener('submit',function(e){
+  var f=e.target.closest('[data-claim]');if(!f)return;e.preventDefault();
+  var id=f.dataset.claim,by=(f.querySelector('input').value||'').trim();
+  if(by)store('wl-name',by);
+  var btn=f.querySelector('.yes');btn.disabled=true;btn.textContent='Saving…';
+  post({action:'claim',id:id,by:by}).then(function(res){
+    if(!res.ok&&res.error==='already_claimed'){state.items=res.items||state.items;state.confirming='';render();alertMsg('Someone just claimed that one. Pick another!');return}
+    state.confirming='';state.justTaken=id;apply(res);setTimeout(function(){state.justTaken=''},900);
+  }).catch(netErr);
+});
+function apply(res){if(res&&res.ok){state.items=res.items||state.items;render()}else alertMsg(res&&res.error==='wrong_passcode'?'That passcode is wrong. Unlock again.':'That didn\'t save. Try again.')}
+function netErr(){alertMsg("That didn't save. Check your connection and try again.");render()}
+function alertMsg(t){var s=$('status');s.hidden=false;s.textContent=t;s.scrollIntoView({block:'center',behavior:'smooth'})}
+
+/* ---------- Kathleen's tools ---------- */
+$('show-unlock').onclick=function(){if(state.key){$('tools').hidden=false;$('tools').scrollIntoView({behavior:'smooth'});return}$('unlock').hidden=false;$('passcode').focus()};
+$('unlock-form').addEventListener('submit',function(e){
+  e.preventDefault();var k=$('passcode').value;
+  post({action:'checkKey',key:k}).then(function(res){
+    if(res.ok){state.key=k;store('wl-key',k);$('unlock').hidden=true;$('tools').hidden=false;render()}
+    else $('unlock-msg').textContent='That passcode is wrong.';
+  }).catch(function(){$('unlock-msg').textContent="Couldn't check the passcode. Try again."});
+});
+$('lock').onclick=function(){state.key='';store('wl-key',null);$('tools').hidden=true;render()};
+$('read-form').addEventListener('submit',function(e){
+  e.preventDefault();var url=$('link').value.trim();if(!url)return;
+  var b=$('read-btn');b.disabled=true;b.textContent='Reading…';$('tool-msg').textContent='';
+  post({action:'preview',url:url,key:state.key}).then(function(res){
+    b.disabled=false;b.textContent='Read link';
+    if(!res.ok){$('tool-msg').textContent=res.error==='wrong_passcode'?'Your passcode changed. Unlock again.':"Couldn't read that link.";return}
+    var it=res.item;$('f-url').value=it.url||url;$('f-name').value=it.name||'';$('f-price').value=it.price||'';$('f-store').value=it.store||'';$('f-image').value=it.image||'';showPreview();
+    $('tool-msg').textContent=it.blocked||!it.name?"That store wouldn't share its details. Type the name and price, then add it.":(it.price?'Check the details, then add it.':"Couldn't find the price. Type it in, then add it.");
+    $('f-name').focus();
+  }).catch(function(){b.disabled=false;b.textContent='Read link';$('tool-msg').textContent="Couldn't read that link. Type the details instead."});
+});
+function showPreview(){var u=safeUrl($('f-image').value);var im=$('f-preview');if(u){im.src=u;im.hidden=false}else im.hidden=true}
+$('f-image').addEventListener('change',showPreview);
+function startEdit(id){
+  var it=state.items.filter(function(i){return i.id===id})[0];if(!it)return;
+  state.editing=id;$('tools').hidden=false;$('tools-title').textContent='Edit gift';
+  $('f-person').value=it.person;$('f-name').value=it.name;$('f-price').value=it.price;$('f-store').value=it.store;$('f-url').value=it.url;$('f-image').value=it.image;$('f-note').value=it.note;showPreview();
+  $('save-btn').textContent='Save changes';$('cancel-edit').hidden=false;$('tools').scrollIntoView({behavior:'smooth'});
+}
+function resetForm(){state.editing='';$('item-form').reset();$('link').value='';$('f-preview').hidden=true;$('tools-title').textContent='Add a gift';$('save-btn').textContent='Add to the list';$('cancel-edit').hidden=true}
+$('cancel-edit').onclick=resetForm;
+$('item-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var item={person:$('f-person').value,name:$('f-name').value,price:$('f-price').value,store:$('f-store').value,url:$('f-url').value,image:$('f-image').value,note:$('f-note').value};
+  var body=state.editing?{action:'update',id:state.editing,item:item,key:state.key}:{action:'add',item:item,key:state.key};
+  var b=$('save-btn');b.disabled=true;
+  post(body).then(function(res){
+    b.disabled=false;
+    if(!res.ok){$('tool-msg').textContent=res.error==='wrong_passcode'?'Your passcode changed. Unlock again.':(res.error||"That didn't save.");return}
+    var who=PEOPLE.filter(function(p){return p.id===item.person})[0].name;
+    $('tool-msg').textContent=(state.editing?'Saved.':'Added to '+who+"'s list.");
+    var keepPerson=item.person;resetForm();$('f-person').value=keepPerson;apply(res);
+  }).catch(function(){b.disabled=false;$('tool-msg').textContent="That didn't save. Check your connection and try again."});
+});
+
+var saved=store('wl-key');
+if(saved&&API){post({action:'checkKey',key:saved}).then(function(r){if(r.ok){state.key=saved;$('tools').hidden=false;render()}else store('wl-key',null)}).catch(function(){})}
+if(location.hash&&PEOPLE.some(function(p){return '#'+p.id===location.hash}))state.show=location.hash.slice(1);
+render();load();
+setInterval(function(){if(!document.hidden&&!state.confirming)load()},60000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&!state.confirming)load()});
+})();
+</script>
+</body>
+</html>
