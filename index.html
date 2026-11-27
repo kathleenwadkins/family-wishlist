@@ -90,6 +90,11 @@ h1{margin:0;font-size:clamp(32px,9vw,56px);line-height:1.05;font-weight:800;lett
 .owner button{border:1px solid var(--line);min-height:36px;padding:0 12px;border-radius:999px;background:var(--card);color:var(--ink);font-size:13px;font-weight:600}
 .item.taken .owner button{background:#FFFDF8;color:#1E1E1E;border-color:#FFFDF8}
 .empty{margin:0;font-style:italic;color:var(--muted)}
+.squad-intro{margin:0;color:var(--muted);font-size:14px;max-width:60ch}
+.elves{display:flex;flex-direction:column;gap:6px;background:var(--card);border-radius:12px;padding:10px 12px}
+.elves strong{font-size:14px;color:var(--deep)}
+.elves span{font-size:14px;overflow-wrap:anywhere}
+.hat{display:inline-flex;align-items:center;gap:6px}
 /* tools */
 .tools{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
 .candy{height:10px;background-image:repeating-linear-gradient(-45deg,#C8202F 0 14px,#fff 14px 28px)}
@@ -181,7 +186,8 @@ var PEOPLE=[
   {id:'emma',name:'Emma',tone:'red'},
   {id:'bennett',name:'Bennett',tone:'gold'},
   {id:'todd',name:'Todd',tone:'green'},
-  {id:'kathleen',name:'Kathleen',tone:'red'}
+  {id:'kathleen',name:'Kathleen',tone:'red'},
+  {id:'squad',name:'Elf Squad',tone:'gold',squad:true}
 ];
 var state={items:[],show:'all',confirming:'',justTaken:'',editing:'',key:''};
 var $=function(id){return document.getElementById(id)};
@@ -220,6 +226,7 @@ function itemHTML(it,p){
   var img=safeUrl(it.image)?'<img src="'+esc(it.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer">':GIFT;
   var shop=safeUrl(it.url)?'<a class="shop" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+(it.store?'View at '+esc(it.store):'View it')+' ↗</a>':'';
   var price=it.price?'<span class="price">'+esc(it.price)+'</span>':'';
+  if(p.squad)return squadHTML(it,img,shop,price,owner);
   if(it.claimed){
     return '<article class="item taken'+(state.justTaken===it.id?' anim':'')+'">'+BOW+'<div class="thumb">'+img+'</div><div class="tag"><strong>'+(it.claimedBy?esc(it.claimedBy)+' is getting this!':'Someone is getting this!')+'</strong><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div><button type="button" class="undo" data-act="unclaim" data-id="'+esc(it.id)+'">Not getting it after all?</button></div>'+owner+'</article>';
   }
@@ -229,12 +236,26 @@ function itemHTML(it,p){
   }else body+='<button type="button" class="claim" data-act="claim" data-id="'+esc(it.id)+'">I\'m getting this one!</button>';
   return body+owner+'</article>';
 }
+var HAT='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19c3-9 7-14 13-15-2 4-1 9 2 15z" fill="#B01E2C"/><rect x="3" y="18" width="18" height="3.5" rx="1.75" fill="#FFFDF8" stroke="#C9BFAE"/><circle cx="17.5" cy="4" r="2.2" fill="#FFFDF8" stroke="#C9BFAE"/></svg>';
+function elfNames(it){return String(it.claimedBy||'').split(/\s*,\s*/).filter(Boolean)}
+function squadHTML(it,img,shop,price,owner){
+  var names=elfNames(it),me=(store('wl-name')||'').toLowerCase(),imIn=!!me&&names.some(function(n){return n.toLowerCase()===me});
+  var h='<article class="item"><div class="thumb">'+img+'</div><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div>'+(it.note?'<p class="note">'+esc(it.note)+'</p>':'');
+  h+='<div class="elves"><strong class="hat">'+HAT+(names.length?names.length+(names.length===1?' elf':' elves')+' chipping in':'No elves yet. Be the first!')+'</strong>'+(names.length?'<span>'+esc(names.join(', '))+'</span>':'')+'</div>';
+  if(state.confirming===it.id){
+    h+='<form class="confirm" data-claim="'+esc(it.id)+'" data-squad="1"><label for="by-'+esc(it.id)+'">Your name</label><input id="by-'+esc(it.id)+'" type="text" maxlength="40" required value="'+esc(store('wl-name')||'')+'" autocomplete="given-name"><div class="row"><button class="yes" type="submit">Count me in!</button><button class="no" type="button" data-act="cancel">Cancel</button></div></form>';
+  }else if(imIn){
+    h+='<button type="button" class="undo" data-act="leave" data-id="'+esc(it.id)+'">Not chipping in after all?</button>';
+  }else h+='<button type="button" class="claim" data-act="claim" data-id="'+esc(it.id)+'">Join the Elf Squad!</button>';
+  return h+owner+'</article>';
+}
 function render(){
   renderPeople();
   var shown=state.show==='all'?PEOPLE:PEOPLE.filter(function(p){return p.id===state.show});
   $('lists').innerHTML=shown.map(function(p){
     var list=state.items.filter(function(i){return i.person===p.id}).sort(function(a,b){return (a.claimed?1:0)-(b.claimed?1:0)||(b.addedAt||0)-(a.addedAt||0)});
     var open=list.filter(function(i){return !i.claimed}).length;
+    if(p.squad)return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head"><h2 class="hat">'+HAT+p.name+'</h2></div><p class="squad-intro">Bigger gifts we can all go in on together. Tap Join the Elf Squad and Kathleen will sort out who owes what.</p>'+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">No Elf Squad gifts yet.</p>')+'</section>';
     return '<section class="person '+p.tone+'" aria-label="'+p.name+'"><div class="person-head"><h2>'+p.name+'</h2><p>'+(list.length?open+' still up for grabs · '+(list.length-open)+' taken':'')+'</p></div>'+(list.length?'<div class="grid">'+list.map(function(i){return itemHTML(i,p)}).join('')+'</div>':'<p class="empty">Nothing on '+p.name+'\'s list yet.</p>')+'</section>';
   }).join('');
 }
@@ -249,6 +270,10 @@ document.addEventListener('click',function(e){
     if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Tap again to free it up';return}
     post({action:'unclaim',id:id}).then(apply).catch(netErr);
   }
+  else if(act==='leave'){
+    if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Tap again to drop out';return}
+    post({action:'unclaim',id:id,by:store('wl-name')||''}).then(apply).catch(netErr);
+  }
   else if(act==='edit')startEdit(id);
   else if(act==='remove'){
     if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Tap again to remove';return}
@@ -258,10 +283,12 @@ document.addEventListener('click',function(e){
 document.addEventListener('submit',function(e){
   var f=e.target.closest('[data-claim]');if(!f)return;e.preventDefault();
   var id=f.dataset.claim,by=(f.querySelector('input').value||'').trim();
+  if(f.dataset.squad&&!by){f.querySelector('input').focus();return}
   if(by)store('wl-name',by);
   var btn=f.querySelector('.yes');btn.disabled=true;btn.textContent='Saving…';
   post({action:'claim',id:id,by:by}).then(function(res){
     if(!res.ok&&res.error==='already_claimed'){state.items=res.items||state.items;state.confirming='';render();alertMsg('Someone just claimed that one. Pick another!');return}
+    if(!res.ok&&res.error==='name_needed'){alertMsg('Add your name to join the Elf Squad.');return}
     state.confirming='';state.justTaken=id;apply(res);setTimeout(function(){state.justTaken=''},900);
   }).catch(netErr);
 });
