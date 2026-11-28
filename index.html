@@ -197,6 +197,7 @@ var $=function(id){return document.getElementById(id)};
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){return /^https?:\/\//i.test(u||'')?u:''}
+function fmtPrice(v){var s=String(v==null?'':v).trim();if(!s)return '';if(/^\$/.test(s))return s;if(/^\d+(\.\d+)?$/.test(s.replace(/,/g,''))){var n=parseFloat(s.replace(/,/g,''));return '$'+(n%1?n.toFixed(2):n.toLocaleString('en-US'))}return /^\d/.test(s)?'$'+s:s}
 
 var colors=['#FF4B4B','#FFC93C','#3DDC84','#4DA3FF','#FF8AD8'],lh='';
 for(var n=0;n<22;n++){var c=colors[n%5];lh+='<div class="bw"><div class="cap"></div><div class="bulb" style="background:'+c+';box-shadow:0 0 12px '+c+'"></div></div>'}
@@ -228,7 +229,7 @@ function itemHTML(it,p){
   var owner=state.key?'<div class="owner"><button type="button" data-act="edit" data-id="'+esc(it.id)+'">Edit</button><button type="button" data-act="remove" data-id="'+esc(it.id)+'">Remove</button></div>':'';
   var img=safeUrl(it.image)?'<div class="thumb"><img src="'+esc(it.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></div>':'';
   var shop=safeUrl(it.url)?'<a class="shop" href="'+esc(it.url)+'" target="_blank" rel="noopener">'+(it.store?'View at '+esc(it.store):'View it')+' ↗</a>':'<span class="pick">You pick which one!</span>';
-  var price=it.price?'<span class="price">'+esc(it.price)+'</span>':'';
+  var price=fmtPrice(it.price)?'<span class="price">'+esc(fmtPrice(it.price))+'</span>':'';
   if(p.squad)return squadHTML(it,img,shop,price,owner);
   if(it.claimed){
     return '<article class="item taken'+(state.justTaken===it.id?' anim':'')+'">'+BOW+img+'<div class="tag"><strong>'+(it.claimedBy?esc(it.claimedBy)+' is getting this!':'Someone is getting this!')+'</strong><h3>'+esc(it.name)+'</h3><div class="meta">'+price+shop+'</div><button type="button" class="undo" data-act="unclaim" data-id="'+esc(it.id)+'">Not getting it after all?</button></div>'+owner+'</article>';
@@ -325,7 +326,7 @@ $('f-image').addEventListener('change',showPreview);
 function startEdit(id){
   var it=state.items.filter(function(i){return i.id===id})[0];if(!it)return;
   state.editing=id;$('tools').hidden=false;$('tools-title').textContent='Edit gift';
-  $('f-person').value=it.person;$('f-name').value=it.name;$('f-price').value=it.price;$('f-store').value=it.store;$('f-url').value=it.url;$('f-image').value=it.image;$('f-note').value=it.note;showPreview();
+  $('f-person').value=it.person;$('f-name').value=it.name;$('f-price').value=fmtPrice(it.price);$('f-store').value=it.store;$('f-url').value=it.url;$('f-image').value=it.image;$('f-note').value=it.note;showPreview();
   $('save-btn').textContent='Save changes';$('cancel-edit').hidden=false;$('tools').scrollIntoView({behavior:'smooth'});
 }
 function resetForm(){state.editing='';$('item-form').reset();$('link').value='';$('f-preview').hidden=true;$('tools-title').textContent='Add a gift';$('save-btn').textContent='Add to the list';$('cancel-edit').hidden=true}
